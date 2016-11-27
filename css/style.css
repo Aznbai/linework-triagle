@@ -37,3 +37,7 @@ canvas {
     width: 100%;
     padding: 5px;
 }
+
+#counter {
+    opacity: 0.3;
+}

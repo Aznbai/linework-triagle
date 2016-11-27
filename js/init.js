@@ -1,5 +1,6 @@
 var lineGroup = new Group();
 var lineCount = 300;
+var harmonicFactors = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 760, 1290, 1490, 1496, 1504];
 for (var i = 0; i < lineCount; i++) {
   var linePath = new Path.Line([0, 0], [0, 0]);
   lineGroup.addChild(linePath);
@@ -30,6 +31,8 @@ function MouseMove(event) {
 }
 
 function onFrame(event) {
+  document.getElementById("counter").innerHTML = "factor: " + mouse.x
+    // console.log(mouse.x);
   var vector = new Point({
     angle: -event.count % 360,
     length: 10 * Math.tan(-event.count / 30) + 800
@@ -41,7 +44,7 @@ function onFrame(event) {
   path1.position = view.center + vector.normalize(50 * Math.cos(event.count / 50) + 10);
   for (var i = 0; i < lineCount; i++) {
     var path = lineGroup.children[i];
-    var l1 = (mouse.x * length1 / lineCount * (i + event.count / 50000)) % length1;
+    var l1 = ((100 + mouse.x) / 1 * length1 / lineCount * (i + event.count / 50000)) % length1;
     var l2 = (length2 / lineCount * (i + event.count / 50)) % length2;
     path.firstSegment.point = path1.getPointAt(l1),
       path.lastSegment.point = path2.getPointAt(l2);
