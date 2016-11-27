@@ -1,5 +1,5 @@
 var lineGroup = new Group();
-var lineCount = 200;
+var lineCount = 300;
 for (var i = 0; i < lineCount; i++) {
   var linePath = new Path.Line([0, 0], [0, 0]);
   lineGroup.addChild(linePath);
@@ -13,14 +13,14 @@ path2.position = view.center;
 path2.position.y += 50;
 // var path2 = path1.clone();
 path1.scale(20); //default 5
-path2.scale(2); //default 2
-path1.strokeColor = 'rgb(255,25,25)';
-path2.strokeColor = 'rgb(255,25,25)';
+path2.scale(4); //default 2
+// path1.strokeColor = 'rgba(255,25,25)';
+// path2.strokeColor = 'rgba(255,25,25)';
 var length1 = path1.length;
 var length2 = path2.length;
 canvas.addEventListener('mousemove', MouseMove, false);
 mouse = {
-  x: 0,
+  x: 2,
   y: 0
 }
 
@@ -32,12 +32,13 @@ function MouseMove(event) {
 function onFrame(event) {
   var vector = new Point({
     angle: -event.count % 360,
-    length: 100
+    length: 10 * Math.tan(-event.count / 30) + 800
   });
-  //path1.rotate(-0.5);
-  //path1.position = view.center - vector;
-  //path2.rotate(0.5);
-  // path2.position = view.center + vector.normalize(50);
+  // path1.rotate(-0.05);
+  path1.rotate(0.05 * Math.sin(event.count / 10));
+  // path1.position = view.center - vector;
+  path2.rotate(0.05);
+  path1.position = view.center + vector.normalize(50 * Math.cos(event.count / 50) + 10);
   for (var i = 0; i < lineCount; i++) {
     var path = lineGroup.children[i];
     var l1 = (mouse.x * length1 / lineCount * (i + event.count / 50000)) % length1;
